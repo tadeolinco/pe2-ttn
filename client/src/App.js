@@ -36,7 +36,9 @@ class App extends Component {
 
   render() {
     if (this.state.loading) return <FullLoader />
+    // if there is no user logged in, here will be my routes
     if (!this.props.session.user)
+      // only two routes, then everything else redirects to /login
       return (
         <Switch>
           <Route path="/login" component={LoginPage} />
@@ -44,6 +46,8 @@ class App extends Component {
           <Redirect to="/login" />
         </Switch>
       )
+
+    // if there is a user, give him the rest of the routes, except the two above
     return (
       <Switch>
         {routes.map(route => <Route key={route.path} {...route} />)}

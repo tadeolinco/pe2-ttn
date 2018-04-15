@@ -25,7 +25,7 @@ export default {
         } else {
           const studentRepository = getRepository(Student)
           const student = await studentRepository.findOneById(
-            req.session.user.id,
+            req.session.user.id
           )
           body.student = student
         }

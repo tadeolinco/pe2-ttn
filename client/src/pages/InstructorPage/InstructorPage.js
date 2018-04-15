@@ -59,6 +59,7 @@ class InstructorPage extends Component {
       )
       const sections = data.data.map(section => {
         section.students = section.students
+          .filter(student => student.willPlaySingles)
           .map(student => {
             student.hasLost = false
             for (const game of student.games) {

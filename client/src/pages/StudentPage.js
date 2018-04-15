@@ -45,6 +45,9 @@ class StudentPage extends Component {
 
       const student = data.data[0]
 
+      student.games.sort((a, b) => a.dateCreated - b.dateCreated)
+      student.team.games.sort((a, b) => a.dateCreated - b.dateCreated)
+
       student.hasLost = false
       for (const game of student.games) {
         if (game.score < game.opponentScore) {
