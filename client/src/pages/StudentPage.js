@@ -44,7 +44,6 @@ class StudentPage extends Component {
       )
 
       const student = data.data[0]
-      console.log(student)
       student.games.sort((a, b) => a.dateCreated - b.dateCreated)
 
       student.hasLost = false
@@ -68,7 +67,6 @@ class StudentPage extends Component {
 
       this.setState({ student, loading: false })
     } catch (err) {
-      console.log(err)
       // this.props.notifications.addMessage(response.data.message, 'error')
       this.setState({ loading: false })
     }
@@ -77,7 +75,6 @@ class StudentPage extends Component {
   render() {
     if (this.state.loading) return <FullLoader />
     const { student } = this.state
-    console.log(student)
     return (
       <Grid style={{ margin: 0 }}>
         {student.willPlaySingles && (
