@@ -5,7 +5,7 @@
   "username": "root",
   "password": "admin",
   "database": "pe2_ttn",
-  "synchronize": true,
+  "synchronize": false,
   "logging": false,
   "dropSchema": false,
   "entities": ["src/entity/**/entity.ts"],
