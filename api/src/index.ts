@@ -38,6 +38,8 @@ createConnection()
 
     app.use('/', express.static(path.join(__dirname, 'build')))
 
+    app.use('*', (req, res) => res.redirect('/'))
+
     const port = process.env.PORT || 3001
     app.listen(port, () => {
       console.log(`Server listening to port: ${port}`)
