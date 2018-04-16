@@ -56,6 +56,7 @@ class LoginPage extends Component {
           <GridColumn verticalAlign="middle">
             <ButtonGroup>
               <Button
+                disabled={this.state.loading && this.state.type !== 'Student'}
                 primary={this.state.type === 'Student'}
                 onClick={() => {
                   this.setState({ type: 'Student' })
@@ -66,6 +67,9 @@ class LoginPage extends Component {
               </Button>
               <ButtonOr />
               <Button
+                disabled={
+                  this.state.loading && this.state.type !== 'Instructor'
+                }
                 primary={this.state.type === 'Instructor'}
                 onClick={() => {
                   this.setState({ type: 'Instructor' })
@@ -129,11 +133,11 @@ class LoginPage extends Component {
         <GridRow centered style={{ paddingTop: 0 }}>
           <GridColumn width={13}>
             <Divider />
-            <Link to="/signup">
-              <Button fluid primary>
+            <Button fluid primary disabled={this.state.loading}>
+              <Link to="/signup" style={{ color: 'white' }}>
                 Sign up
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </GridColumn>
         </GridRow>
       </Grid>

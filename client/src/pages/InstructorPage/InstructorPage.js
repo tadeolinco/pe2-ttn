@@ -20,6 +20,7 @@ import qs from 'qs'
 import routes from './components/routes'
 import { withNotifications } from '../../providers/NotificationsProvider'
 import { withSession } from '../../providers/SessionProvider'
+import FullLoader from '../../components/FullLoader'
 
 class InstructorPage extends Component {
   state = {
@@ -188,59 +189,63 @@ class InstructorPage extends Component {
               {routes.map(route => <Route key={route.path} {...route} />)}
               <Route
                 path="/"
-                render={() => (
-                  <Grid style={{ margin: 0 }}>
-                    <GridRow centered>
-                      <GridColumn width={16}>
-                        {this.state.sections.length ? (
-                          <Dropdown
-                            fluid
-                            selection
-                            search
-                            options={this.state.sections.map(section => ({
-                              text: section.name,
-                              value: section.id,
-                            }))}
-                            value={this.state.section}
-                            onChange={this.changeSection}
-                          />
+                render={() =>
+                  this.state.loadingSections ? (
+                    <FullLoader />
+                  ) : (
+                    <Grid style={{ margin: 0 }}>
+                      <GridRow centered>
+                        <GridColumn width={16}>
+                          {this.state.sections.length ? (
+                            <Dropdown
+                              fluid
+                              selection
+                              search
+                              options={this.state.sections.map(section => ({
+                                text: section.name,
+                                value: section.id,
+                              }))}
+                              value={this.state.section}
+                              onChange={this.changeSection}
+                            />
+                          ) : (
+                            <Link to="/instructor/add-section">
+                              <Button primary fluid>
+                                Add Section
+                              </Button>
+                            </Link>
+                          )}
+                        </GridColumn>
+                      </GridRow>
+                      {currentSection &&
+                        (currentSection.students.length ? (
+                          <Fragment>
+                            {currentSection.students.map(student => (
+                              <GridRow centered key={student.id}>
+                                <GridColumn width={16}>
+                                  <StudentTable {...student} />
+                                </GridColumn>
+                              </GridRow>
+                            ))}
+                            {!!currentSection.teams.length && <Divider />}
+                            {currentSection.teams.map(team => (
+                              <GridRow centered key={team.id}>
+                                <GridColumn width={16}>
+                                  <TeamTable {...team} />
+                                </GridColumn>
+                              </GridRow>
+                            ))}
+                          </Fragment>
                         ) : (
-                          <Link to="/instructor/add-section">
-                            <Button primary fluid>
-                              Add Section
-                            </Button>
-                          </Link>
-                        )}
-                      </GridColumn>
-                    </GridRow>
-                    {currentSection &&
-                      (currentSection.students.length ? (
-                        <Fragment>
-                          {currentSection.students.map(student => (
-                            <GridRow centered key={student.id}>
-                              <GridColumn width={16}>
-                                <StudentTable {...student} />
-                              </GridColumn>
-                            </GridRow>
-                          ))}
-                          {!!currentSection.teams.length && <Divider />}
-                          {currentSection.teams.map(team => (
-                            <GridRow centered key={team.id}>
-                              <GridColumn width={16}>
-                                <TeamTable {...team} />
-                              </GridColumn>
-                            </GridRow>
-                          ))}
-                        </Fragment>
-                      ) : (
-                        <GridRow centered>
-                          <GridColumn width={16}>
-                            <p>No students yet.</p>
-                          </GridColumn>
-                        </GridRow>
-                      ))}
-                  </Grid>
-                )}
+                          <GridRow centered>
+                            <GridColumn width={16}>
+                              <p>No students yet.</p>
+                            </GridColumn>
+                          </GridRow>
+                        ))}
+                    </Grid>
+                  )
+                }
               />
               />
             </Switch>

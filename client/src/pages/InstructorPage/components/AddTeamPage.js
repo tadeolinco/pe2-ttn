@@ -13,6 +13,7 @@ import Axios from 'axios'
 import qs from 'qs'
 import withForm from '../../../util/withForm'
 import { withNotifications } from '../../../providers/NotificationsProvider'
+import FullLoader from '../../../components/FullLoader'
 
 class AddTeamModal extends Component {
   state = {
@@ -73,7 +74,9 @@ class AddTeamModal extends Component {
       section => section.id === form.sectionId
     )
 
-    return (
+    return this.state.loadingStudents ? (
+      <FullLoader />
+    ) : (
       <Grid style={{ margin: 0 }}>
         {currentSection ? (
           <GridRow centered>
